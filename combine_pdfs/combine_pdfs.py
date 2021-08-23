@@ -3,6 +3,24 @@ from glob import glob
 from PyPDF2 import PdfFileReader, PdfFileWriter
 import os
 
+
+def main():
+    parser = ArgumentParser()
+
+    # Add more options if you like
+    parser.add_argument("-o", "--output",
+                        dest="output_filename",
+                        default="merged.pdf",
+                        help="write merged PDF to FILE",
+                        metavar="FILE")
+    parser.add_argument("-p", "--path",
+                        dest="path",
+                        default=".",
+                        help="path of source PDF files")
+
+    args = parser.parse_args()
+    merge(args.path, args.output_filename)
+
 def merge(path, output_filename):
     output = PdfFileWriter()
 
@@ -19,18 +37,4 @@ def merge(path, output_filename):
         output.write(f)
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
-
-    # Add more options if you like
-    parser.add_argument("-o", "--output",
-                        dest="output_filename",
-                        default="merged.pdf",
-                        help="write merged PDF to FILE",
-                        metavar="FILE")
-    parser.add_argument("-p", "--path",
-                        dest="path",
-                        default=".",
-                        help="path of source PDF files")
-
-    args = parser.parse_args()
-    merge(args.path, args.output_filename)
+    main()
